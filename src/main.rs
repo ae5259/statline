@@ -13,7 +13,6 @@ fn main() {
     };
 
     let chars = binding.split("").collect::<Vec<&str>>();
-    println!("{:?}", chars.clone());
 
     for ch in chars.clone() {
         match ch {
