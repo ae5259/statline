@@ -1,28 +1,23 @@
 {
-  description = "A very basic flake";
-
+  description = "Rust flake";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-  }: let
-    pkgs = nixpkgs.legacyPackages."x86_64-linux";
-  in {
-    packages."x86_64-linux".default = pkgs.callPackage ./default.nix {};
+  outputs =
+    {
+      self,
+      nixpkgs,
+      ...
+    }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+    in
+    {
+      formatter.${system} = pkgs.nixfmt;
 
-    devShells."x86_64-linux".default = pkgs.mkShell {
-      buildInputs = with pkgs; [
-        rustc
-        cargo
-        rustfmt
-        clippy
-        rust-analyzer
-      ];
-
-      env.RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+      devShells.${system}.default = import ./shell.nix { inherit self pkgs; };
+      packages.${system}.default = import ./default.nix { inherit pkgs; };
     };
-  };
 }

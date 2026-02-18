@@ -1,11 +1,8 @@
-{
-  rustPlatform,
-  pkg-config,
-}:
-rustPlatform.buildRustPackage {
-  name = "sl";
-  src = ./.;
+{ pkgs, ... }:
+pkgs.rustPlatform.buildRustPackage {
+  pname = "sae";
+  version = "0.1";
 
-  nativeBuildInputs = [pkg-config];
+  src = pkgs.lib.cleanSource ./.;
   cargoLock.lockFile = ./Cargo.lock;
 }
