@@ -17,11 +17,8 @@ fn main() {
     let chars = binding.split("").collect::<Vec<&str>>();
 
     for ch in chars.clone() {
-        match ch {
-            "\n" => {
-                count = count + 1;
-            }
-            _ => {}
+        if ch == "\n" {
+            count += 1
         }
     }
 
