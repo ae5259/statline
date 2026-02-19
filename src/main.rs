@@ -24,10 +24,7 @@ fn main() {
 
     let binding = string.as_str().replace("\n", " ");
     let binding = binding.trim();
-    let words = binding
-        .split(" ")
-        .filter(|word| !word.is_empty())
-        .collect::<Vec<&str>>();
+    let words = binding.split(" ").collect::<Vec<&str>>();
 
     println!(
         "     {:?}L {:?}W {:?}Ch",
