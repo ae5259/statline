@@ -2,37 +2,14 @@ use std::io;
 use std::io::Read;
 
 fn main() {
-    let mut string = String::new();
+    let mut input = String::new();
     io::stdin()
-        .read_to_string(&mut string)
+        .read_to_string(&mut input)
         .expect("Couldn't read from stdin.");
 
-    let binding = string.trim();
+    let lines = input.lines().count();
+    let words = input.split_whitespace().count();
+    let chars = input.chars().count();
 
-    let mut count = match binding {
-        "" => 0,
-        _ => 1,
-    };
-
-    let chars = binding.split("").collect::<Vec<&str>>();
-
-    for ch in chars.clone() {
-        if ch == "\n" {
-            count += 1
-        }
-    }
-
-    let binding = string.as_str().replace("\n", " ");
-    let binding = binding.trim();
-    let words = binding
-        .split(" ")
-        .filter(|word| !word.is_empty())
-        .collect::<Vec<&str>>();
-
-    println!(
-        "     {:?}L {:?}W {:?}Ch",
-        count,
-        words.len(),
-        chars.len() - 1
-    );
+    println!("     {lines}L {words}W {chars}Ch");
 }
